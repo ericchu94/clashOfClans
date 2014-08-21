@@ -1,0 +1,21 @@
+<form method="post" action="calculate">
+  <div>
+  Troops
+  <% for (var i = 0; i < troops.length; ++i) { %>
+    <div>
+      <%= troops[i].level %>
+      <input type="number" name="troop<%= troops[i].level %>" value="0">
+    </div>
+  <% } %>
+  </div>
+  <div>
+  Barracks
+  <% for (var i = 0; i < barracks.length; ++i) { %>
+    <div>
+      <%= barracks[i].level %>
+      <input type="number" name="barrack<%= troops[i].level %>" value="0">
+    </div>
+  <% } %>
+  </div>
+  <input type="submit">
+</form>
