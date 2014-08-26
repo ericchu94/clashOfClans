@@ -11,6 +11,7 @@ module.exports = {
     level: 'integer',
     space: 'integer',
     duration: 'integer',
+    name: 'string',
   }
 };
 
