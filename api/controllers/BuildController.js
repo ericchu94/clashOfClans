@@ -18,7 +18,7 @@ module.exports = {
         return res.serverError();
       }
 
-      Barrack.find().exec(function (err, barracks) {
+      Barracks.find().exec(function (err, barracks) {
         if (err) {
           return res.serverError();
         }
@@ -35,63 +35,43 @@ module.exports = {
    * `BuildController.calculate()`
    */
   calculate: function (req, res) {
-    var duration = 0;
-    var user_barracks = [];
+    res.json(req.body);
+  },
 
-    Troop.find().exec(function (err, troops) {
+  /**
+   * `BuildController.default()`
+   */
+  defaultSetup: function (req, res) {
+    var defaults = sails.config.defaultSetup;
+    var troops = defaults.troops;
+    var barracks = defaults.barracks;
+
+    Troop.destroy().exec(function (err) {
       if (err) {
         return res.serverError();
       }
 
-      for (var i = 0; i < troops.length; ++i) {
-        var troop = troops[i];
-        duration += req.body['troop' + troop.level] * troop.duration;
-      }
-
-      Barrack.find().exec(function (err, barracks) {
+      Troop.create(troops).exec(function (err, troops) {
         if (err) {
           return res.serverError();
         }
 
-        for (var i = 0; i < barracks.length; ++i) {
-          var barrack = barracks[i];
-
-          var count = req.body['barrack' + barrack.level];
-          for (var j = 0; j < count; ++j) {
-            user_barracks.push(barrack);
+        Barracks.destroy().exec(function (err) {
+          if (err) {
+            return res.serverError();
           }
-        }
 
-        if (user_barracks.length <= 0) {
-          return res.badRequest();
-        }
+          Barracks.create(barracks).exec(function (err, barracks) {
+            if (err) {
+              return res.serverError();
+            }
 
-        var average = duration / user_barracks.length;
-        troops.sort(function (a, b) {
-          var x = a.space / a.duration;
-          var y = b.space / b.duration;
-          if (x < y) {
-            return -1;
-          }
-          if (x > y) {
-            return 1;
-          }
-          return 0;
+            return res.json({
+              troops: troops,
+              barracks: barracks,
+            });
+          });
         });
-        
-        for (var i = 0; i < user_barracks.length; ++i) {
-          var barrack = user_barracks[i];
-          
-          var capacity = 0;
-          var duration = 0;
-
-          while (capacity < barrack.capacity && duration < average) {
-
-          }
-
-
-        }
-        res.json(req.body);
       });
     });
   },
