@@ -13,12 +13,12 @@ module.exports = {
    * `BuildController.index()`
    */
   index: function (req, res) {
-    Troop.find().exec(function (err, troops) {
+    Troop.find({ sort: 'level' }).exec(function (err, troops) {
       if (err) {
         return res.serverError();
       }
 
-      Barracks.find().exec(function (err, barracks) {
+      Barracks.find({ sort: 'level' }).exec(function (err, barracks) {
         if (err) {
           return res.serverError();
         }

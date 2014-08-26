@@ -8,9 +8,9 @@
 module.exports = {
 
   attributes: {
-    level: 'int',
-    space: 'int',
-    duration: 'int',
+    level: 'integer',
+    space: 'integer',
+    duration: 'integer',
   }
 };
 

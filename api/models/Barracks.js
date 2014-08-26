@@ -8,8 +8,8 @@
 module.exports = {
 
   attributes: {
-    level: 'int',
-    capacity: 'int',
+    level: 'integer',
+    capacity: 'integer',
   }
 };
 
