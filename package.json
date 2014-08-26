@@ -31,7 +31,7 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ericchu/clashOfClans.git"
+    "url": "git://github.com/ericchu94/clashOfClans.git"
   },
   "author": "ericchu",
   "license": ""
