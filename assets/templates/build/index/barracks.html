@@ -1,0 +1,19 @@
+<div class="row barracks" data-level="<%= level %>">
+  <div class="col-lg-2 col-md-12">
+    <h2>Barracks <small>Level <%= level %></small></h2>
+  </div>
+  <% for (var i = 0; i < troops.length; ++i) { %>
+    <div class="col-lg-1 col-md-12">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4><%= troops[i] %></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          0
+        </div>
+      </div>
+    </div>
+  <% } %>
+</div>
