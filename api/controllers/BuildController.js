@@ -13,21 +13,19 @@ module.exports = {
    * `BuildController.index()`
    */
   index: function (req, res) {
-    Troop.find({ sort: 'level' }).exec(function (err, troops) {
+    async.parallel({
+      troops: function (callback) {
+        Troop.find({ sort: 'level' }).exec(callback);
+      },
+      barracks: function (callback) {
+        Barracks.find({ sort: 'level' }).exec(callback);
+      },
+    }, function (err, results) {
       if (err) {
         return res.serverError();
       }
 
-      Barracks.find({ sort: 'level' }).exec(function (err, barracks) {
-        if (err) {
-          return res.serverError();
-        }
-
-        res.view({
-          troops: troops,
-          barracks: barracks,
-        });
-      });
+      res.view(results);
     });
   },
 
@@ -46,33 +44,33 @@ module.exports = {
     var troops = defaults.troops;
     var barracks = defaults.barracks;
 
-    Troop.destroy().exec(function (err) {
+    async.parallel({
+      troops: function (callback) {
+        async.series({
+          destroy: function (callback) {
+            Troop.destroy().exec(callback);
+          },
+          create: function (callback) {
+            Troop.create(troops).exec(callback)
+          },
+        }, callback);
+      },
+      barracks: function (callback) {
+        async.series({
+          destroy: function (callback) {
+            Barracks.destroy().exec(callback);
+          },
+          create: function (callback) {
+            Barracks.create(barracks).exec(callback)
+          },
+        }, callback);
+      }
+    }, function (err, results) {
       if (err) {
         return res.serverError();
       }
 
-      Troop.create(troops).exec(function (err, troops) {
-        if (err) {
-          return res.serverError();
-        }
-
-        Barracks.destroy().exec(function (err) {
-          if (err) {
-            return res.serverError();
-          }
-
-          Barracks.create(barracks).exec(function (err, barracks) {
-            if (err) {
-              return res.serverError();
-            }
-
-            return res.json({
-              troops: troops,
-              barracks: barracks,
-            });
-          });
-        });
-      });
+      res.json(results);
     });
   },
 };
