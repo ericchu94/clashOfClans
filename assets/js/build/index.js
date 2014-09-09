@@ -41,5 +41,11 @@ $(function () {
     calculate();
   });
 
+  $('.build-index').on('click', '.barracks button', function () {
+    $(this).parents('.barracks').remove();
+
+    calculate();
+  });
+
   $('.troops').on('change keypress', 'input', calculate);
 });
