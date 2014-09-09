@@ -27,9 +27,7 @@ $(function () {
     });
   }
 
-  $('.add-barracks ul').on('click', 'a', function (event) {
-    event.preventDefault();
-
+  $('.add-barracks-modal .btn-group-vertical').on('click', 'button', function (event) {
     var troops = $('.troops h4').map(function () {
       return $(this).text();
     }).get();

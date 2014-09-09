@@ -20,15 +20,27 @@
   </div>
   <div class="row add-barracks">
     <div class="col-lg-12">
-      <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-          Add barracks <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <% for (var i = 0; i < barracks.length; ++i) { %>
-            <li><a href="#" data-level="<%= barracks[i].level %>">Level <%= barracks[i].level %></a></li>
-          <% } %>
-        </ul>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".add-barracks-modal">
+        Add barracks
+      </button>
+      <div class="add-barracks-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">Add barracks</h4>
+            </div>
+            <div class="modal-body text-center">
+              <div class="btn-group-vertical">
+                <% for (var i = 0; i < barracks.length; ++i) { %>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" data-level="<%= barracks[i].level %>">Level <%= barracks[i].level %></button>
+                <% } %>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
